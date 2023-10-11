@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>АFO - test</title>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="{{ url_for('bank_details') }}">Реквизиты</a>
+        {% if email %}
+            <p>{{ email }}</p>
+            <a href="{{ url_for('logout') }}">Выход</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Вход</a>
+            <a href="{{ url_for('registration') }}">Регистрация</a>
+        {% endif %}
+    </nav>
+</header>
+{% block content %}{% endblock %}
+</body>
+</html>
