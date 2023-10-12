@@ -100,6 +100,37 @@ def add_bank_details():
     return render_template('add_bank_details.html', form=form, email=session.get('email'))
 
 
+@app.route('/update_bank_details/<int:details_id>', methods=('GET', 'POST'))
+def update_bank_details(details_id: int):
+    if 'email' not in session:
+        return redirect(url_for('bank_details'))
+
+    user = User.query.filter_by(email=session['email']).first()
+    if user is None:
+        return 'Пользователя с таким email не существует'
+
+    details = BankDetail.query.filter_by(id=details_id, user_id=user.id).first()
+    if details is None:
+        return 'Запрашиваемые реквизиты не существует'
+
+    form = BankDetailsForm()
+    if form.validate_on_submit():
+        # Устанавливаем значения из формы в БД для ключей, которые есть в бд
+        BankDetail.query.filter_by(id=details_id, user_id=user.id).update({
+            k: v for k, v in form.data.items() if k in details.__dict__
+        })
+        db.session.commit()
+        return redirect(url_for('bank_details'))
+
+    # Устанавливаем значения из БД в отправляемую форму
+    db_data = details.__dict__
+    for key in form.data.keys():
+        if key in db_data:
+            setattr(getattr(form, key), 'data', db_data[key])
+
+    return render_template('update_bank_details.html', form=form, email=session.get('email'), details_id=details_id)
+
+
 @app.route('/delete_bank_details', methods=('POST', ))
 def delete_bank_details():
     if 'email' not in session:

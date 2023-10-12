@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Добавить реквизиты</h1>
-<form action="{{ url_for('add_bank_details', details_id=details_id) }}" method="post">
+<h1>Редактировать реквизиты</h1>
+<form action="{{ url_for('update_bank_details', details_id=details_id) }}" method="post">
     {{ form.hidden_tag() }}
 
     {% for field in form if field.name not in ['csrf_token', 'submit'] %}

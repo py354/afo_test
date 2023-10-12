@@ -19,6 +19,7 @@
     {{ detail.set_active_form.hidden_tag() }}
     {{ detail.set_active_form.submit() }}
 </form>
+<a href="{{ url_for('update_bank_details', details_id=detail.id) }}">Отредактировать</a>
 <hr>
 {% endfor %}
 
