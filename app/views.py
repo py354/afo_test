@@ -155,12 +155,13 @@ def set_active_bank_details():
     user = User.query.filter_by(email=session['email']).first()
     if user is None:
         return 'Пользователя с таким email не существует'
-    #
+
     form = SetActiveDetailsForm()
     if form.validate_on_submit():
         if user.active_detail_row:
             UserActiveBank.query.filter_by(user_id=user.id).update({UserActiveBank.bank_details_id: form.bank_details_id.data})
         else:
-            UserActiveBank(user_id=user.id, bank_details_id=form.bank_details_id.data)
+            row = UserActiveBank(user_id=user.id, bank_details_id=form.bank_details_id.data)
+            db.session.add(row)
         db.session.commit()
     return redirect(url_for('bank_details'))
