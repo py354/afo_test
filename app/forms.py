@@ -20,7 +20,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("Регистрация")
 
 
-class BankDetails(FlaskForm):
+class BankDetailsForm(FlaskForm):
     bik = StringField('БИК', validators=[
         DataRequired(), Regexp('^\\d{9}$', message='БИК должен состоять из 9 цифр')
     ])

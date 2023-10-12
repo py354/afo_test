@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Добавить реквизиты</h1>
+<form action="{{ url_for('add_bank_details') }}" method="post">
+    {{ form.hidden_tag() }}
+
+    {% for field in form if field.name not in ['csrf_token', 'submit'] %}
+        <div>
+            {{ field.label() }}
+            {{ field() }}
+            {% for e in field.errors %} <span style="color: red">{{ e }}</span> {% endfor %}
+        </div>
+    {% endfor %}
+
+    {{ form.submit() }}
+</form>
+{% endblock %}
