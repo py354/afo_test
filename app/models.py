@@ -6,7 +6,7 @@ class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.Text(), nullable=False, unique=True)
     password_hash = db.Column(db.Text(), nullable=False)
-    bank_details = db.relationship('BankDetail', foreign_keys='BankDetail.user_id')
+    bank_details = db.relationship('BankDetail')
 
     def __repr__(self):
         return "<user {}:{}>".format(self.id, self.email)
@@ -23,7 +23,7 @@ class BankDetail(db.Model):
     iban = db.Column(db.String(34), nullable=False)
 
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship('User', foreign_keys=[user_id])
+    user = db.relationship('User')
 
     def __repr__(self):
         return "bank_details <{}:{}>".format(self.id, self.user_id)
