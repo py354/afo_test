@@ -9,7 +9,7 @@
     <nav>
         <a href="{{ url_for('bank_details') }}">Реквизиты</a>
         {% if email %}
-            <p>{{ email }}</p>
+            <span>{{ email }}</span>
             <a href="{{ url_for('logout') }}">Выход</a>
         {% else %}
             <a href="{{ url_for('login') }}">Вход</a>

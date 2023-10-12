@@ -2,4 +2,21 @@
 
 {% block content %}
 <h1>Страница входа</h1>
+<form action="{{ url_for('login') }}" method="post">
+    {{ form.hidden_tag() }}
+
+    <div>
+        {{ form.email.label() }}
+        {{ form.email() }}
+        {% for e in form.email.errors %} <span style="color: red">{{ e }}</span> {% endfor %}
+    </div>
+
+    <div>
+        {{ form.password.label() }}
+        {{ form.password() }}
+        {% for e in form.password.errors %} <span style="color: red">{{ e }}</span> {% endfor %}
+    </div>
+
+    {{ form.submit() }}
+</form>
 {% endblock %}

@@ -2,4 +2,11 @@
 
 {% block content %}
 <h1>Банковские реквизиты</h1>
+{% if not email %}
+Для просмотра реквизитов необходимо выполнить <a href="{{ url_for('login') }}">Вход</a> или  <a href="{{ url_for('registration') }}">Регистрацию</a>
+{% else %}
+
+
+
+{% endif %}
 {% endblock %}
