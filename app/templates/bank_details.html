@@ -7,13 +7,17 @@
 {% else %}
 
 {% for detail in bank_details %}
-<p><b>{{ detail.bank_name }}</b></p>
+<p><b>{{ detail.bank_name }}</b> {% if detail.is_active %}<i>(Активен)</i>{% endif %}</p>
 <p>БИК: {{ detail.bik }}</p>
 <p>Р/С: {{ detail.checking_account }}</p>
 <p>К/С: {{ detail.correspondent_account }}</p>
 <form action="{{ url_for('delete_bank_details') }}" method="post">
-    {{ detail.form.hidden_tag() }}
-    {{ detail.form.submit() }}
+    {{ detail.delete_form.hidden_tag() }}
+    {{ detail.delete_form.submit() }}
+</form>
+<form action="{{ url_for('set_active_bank_details') }}" method="post" >
+    {{ detail.set_active_form.hidden_tag() }}
+    {{ detail.set_active_form.submit() }}
 </form>
 <hr>
 {% endfor %}

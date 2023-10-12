@@ -6,7 +6,9 @@ class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.Text(), nullable=False, unique=True)
     password_hash = db.Column(db.Text(), nullable=False)
+
     bank_details = db.relationship('BankDetail')
+    active_detail_row = db.relationship('UserActiveBank', uselist=False)
 
     def __repr__(self):
         return "<user {}:{}>".format(self.id, self.email)

@@ -45,3 +45,8 @@ class BankDetailsForm(FlaskForm):
 class DeleteDetailsForm(FlaskForm):
     bank_details_id = HiddenField(validators=[DataRequired()])
     submit = SubmitField("Удалить реквизиты")
+
+
+class SetActiveDetailsForm(FlaskForm):
+    bank_details_id = HiddenField(validators=[DataRequired()])
+    submit = SubmitField("Выбрать активным реквизитом")
