@@ -11,6 +11,10 @@
 <p>БИК: {{ detail.bik }}</p>
 <p>Р/С: {{ detail.checking_account }}</p>
 <p>К/С: {{ detail.correspondent_account }}</p>
+<form action="{{ url_for('delete_bank_details') }}" method="post">
+    {{ detail.form.hidden_tag() }}
+    {{ detail.form.submit() }}
+</form>
 <hr>
 {% endfor %}
 

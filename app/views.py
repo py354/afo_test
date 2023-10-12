@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import app, db
-from .forms import RegistrationForm, LoginForm, BankDetailsForm
+from .forms import RegistrationForm, LoginForm, BankDetailsForm, DeleteDetailsForm
 from .models import User, BankDetail
 
 
@@ -55,9 +55,12 @@ def bank_details():
         user = User.query.filter_by(email=session['email']).first()
         if user is None:
             return 'Пользователя с таким email не существует'
-        print(user)
-        print(user.bank_details)
+
         bank_details = user.bank_details
+        for i in range(len(bank_details)):
+            form = DeleteDetailsForm()
+            form.bank_details_id.data = bank_details[i].id
+            setattr(bank_details[i], 'form', form)
 
     return render_template('bank_details.html', email=session.get('email'), bank_details=bank_details)
 
@@ -87,3 +90,19 @@ def add_bank_details():
         return redirect(url_for('bank_details'))
 
     return render_template('add_bank_details.html', form=form, email=session.get('email'))
+
+
+@app.route('/delete_bank_details', methods=('POST', ))
+def delete_bank_details():
+    if 'email' not in session:
+        return redirect(url_for('bank_details'))
+
+    user = User.query.filter_by(email=session['email']).first()
+    if user is None:
+        return 'Пользователя с таким email не существует'
+
+    form = DeleteDetailsForm()
+    if form.validate_on_submit():
+        BankDetail.query.filter_by(id=form.bank_details_id.data, user_id=user.id).delete()
+        db.session.commit()
+    return redirect(url_for('bank_details'))

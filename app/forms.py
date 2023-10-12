@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, HiddenField
 from wtforms.validators import DataRequired, Optional, Email, Length, EqualTo, Regexp
 
 password_length_validator = Length(min=4, max=20, message='Пароль должен содержать от 4 до 20 символов')
@@ -40,3 +40,8 @@ class BankDetailsForm(FlaskForm):
         Optional(), Length(max=34, message='IBAN должен содержать до 34 символов')
     ])
     submit = SubmitField("Сохранить")
+
+
+class DeleteDetailsForm(FlaskForm):
+    bank_details_id = HiddenField(validators=[DataRequired()])
+    submit = SubmitField("Удалить реквизиты")
