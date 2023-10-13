@@ -1,4 +1,19 @@
 ## Запуск
+1. Создать в postgres базу данных для приложения, например afo_test:
+```console
+$ createdb afo_test
+```
+2. Записать данные для подключения в файл .env
+3. Установить зависимости:
+```console
+$ pip install -r requirements.txt
+```
+4. Выполнить инициализацию и миграцию бд:
+```console
+$ flask db init 
+$ flask db migrate 
+$ flask db upgrade
+```
 Приложение запускается с помощью flask cli:
 ```console
 $ flask run
